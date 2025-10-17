@@ -1223,12 +1223,120 @@ pre code {
     max-width: 16.66667%;
   }
 
-  .col-md-3 {
-    -webkit-box-flex: 0;
-    -ms-flex: 0 0 25%;
-    flex: 0 0 25%;
-    max-width: 25%;
+  /* =========================
+   CSS-only Auto-scrolling Testimonials
+   Targets: .css-carousel
+   Adjust min-height / duration if you add/remove items
+   ========================= */
+
+.css-carousel {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-height: 200px; /* <-- adjust to match the height of your testimonial cards */
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 10px 10px;
+}
+
+/* Stack slides on top of each other */
+.css-carousel .item {
+  position: absolute;
+  inset: 0 0 0 0; /* top:0; right:0; bottom:0; left:0; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 24px;
+  box-sizing: border-box;
+  opacity: 0;
+  transform: translateY(8px);
+  z-index: 1;
+  animation: testimonialFade 16s ease-in-out infinite;
+  -webkit-animation: testimonialFade 16s ease-in-out infinite;
+}
+
+/* Staggered delays for four items (4s visible each) */
+/* If you change number of items or visible time, update animation-duration & delays accordingly */
+.css-carousel .item:nth-child(1) { animation-delay: 0s; }
+.css-carousel .item:nth-child(2) { animation-delay: 4s; }
+.css-carousel .item:nth-child(3) { animation-delay: 8s; }
+.css-carousel .item:nth-child(4) { animation-delay: 12s; }
+
+/* Keyframes: fade in quickly, hold, fade out */
+@keyframes testimonialFade {
+  0%   { opacity: 0; transform: translateY(8px); }
+  5%   { opacity: 1; transform: translateY(0); }   /* fade in */
+  25%  { opacity: 1; transform: translateY(0); }   /* visible */
+  33%  { opacity: 0; transform: translateY(-8px); } /* fade out */
+  100% { opacity: 0; transform: translateY(-8px); }
+}
+
+/* visuals for the card (tweak to match your theme) */
+.testimony-wrap {
+  background: #fff;
+  border-radius: 10px;
+  padding: 22px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  min-height: 160px;
+  box-sizing: border-box;
+}
+
+/* Quote circle */
+.css-carousel .quote {
+  width: 100px;
+  height: 100px;
+  border-radius: 5%;
+  background: #f96d00;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+/* Stars & name */
+.testimony-wrap .rate .fa-star { color: #FFD700; margin-right: 3px; }
+.testimony-wrap .name { margin-top: 10px; font-weight: 600; color: #333; }
+
+/* Accessibility: respect reduced motion setting */
+@media (prefers-reduced-motion: reduce) {
+  .css-carousel .item {
+    animation: none;
+    opacity: 0;
+    transform: none;
+    position: relative;
   }
+  /* show only first testimonial for reduced-motion users */
+  .css-carousel .item:nth-child(1) { opacity: 1; position: relative; }
+}
+
+/* Mobile: simpler stacked layout (no absolute positioning) */
+@media (max-width: 767px) {
+  .css-carousel { min-height: auto; padding: 10px 0; }
+  .css-carousel .item {
+    position: relative;
+    opacity: 1;
+    transform: none;
+    animation: none;
+    padding: 14px;
+  }
+  .testimony-wrap { min-height: auto; padding: 16px; }
+}
+
+ .col-md-3, .col-md-33 {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 25%;
+  flex: 0 0 25%;
+  max-width: 25%;
+  padding: 10px; 
+  box-sizing: border-box; 
+  white-space: normal;
+  word-wrap: break-word; 
+}
+
 
   .col-md-4 {
     -webkit-box-flex: 0;
